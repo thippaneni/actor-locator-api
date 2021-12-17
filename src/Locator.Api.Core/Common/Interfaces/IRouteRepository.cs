@@ -12,5 +12,7 @@ namespace Locator.Api.Core.Common.Interfaces
         Task<IEnumerable<Route>> GetAllRoutesAsync();
 
         Task<IEnumerable<string>> GetRoutesAsync(Landmark startingLandMark, Landmark endingLandMark);
+
+        Task<int> GetNoOfRoutesAsync(Landmark startingLandMark, Landmark endingLandMark, int? maxStops);
     }
 }

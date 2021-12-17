@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Locator\Models\" />
     <Folder Include="Locator\Queries\" />
   </ItemGroup>
 
