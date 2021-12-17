@@ -16,8 +16,4 @@
     <ProjectReference Include="..\Locator.Api.Domain\Locator.Api.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Locator\Models\" />
-  </ItemGroup>
-
 </Project>

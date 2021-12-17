@@ -23,7 +23,7 @@ namespace Locator.Api.Controllers
 
         [HttpPost]
         [Route("GetDistanceBwLandmarks")]
-        public async Task<ActionResult<string>> GetDistanceBwLandmarks([FromBody] GetDistanceBwLandmarksRequest request)
+        public async Task<ActionResult<GetDistanceBwLandmarksResponse>> GetDistanceBwLandmarks([FromBody] GetDistanceBwLandmarksRequest request)
         {
             //validate request
             if (request == null || string.IsNullOrEmpty(request.EndingLanmarkCode) || string.IsNullOrEmpty(request.EndingLanmarkCode)
@@ -34,8 +34,14 @@ namespace Locator.Api.Controllers
 
             if (request.StatingLanmarkCode.Equals(request.EndingLanmarkCode))
             {
-                return BadRequest("Starting and Ending landmarks shoulbe different");
+                return BadRequest("Starting and Ending landmarks should be different");
             }
+
+            if (request.ViaLandmarkCodes.Count() != request.ViaLandmarkCodes.Distinct().Count())
+            {
+                return BadRequest("A given via Landmark Codes should not appear more than once");
+            }
+
 
             // Automapper
             var startingLandMarkdto = new Landmark() { Code = request.StatingLanmarkCode, Name = request.StatingLanmarkCode }; 

@@ -51,11 +51,12 @@ namespace Locator.Api.Infrastructure.Locator.Repository
                 }
             });
 
-            if (rootFound)
+            if (!rootFound)
             {
-                return Task.FromResult(distance);
+                distance = null;
             }
-            return null;
+            
+            return Task.FromResult(distance);
 
         }
         public async Task<IEnumerable<Landmark>> GetAdjecentLandMarksAsync(Landmark landmark)

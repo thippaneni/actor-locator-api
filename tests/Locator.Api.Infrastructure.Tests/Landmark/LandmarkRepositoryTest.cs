@@ -44,10 +44,10 @@ namespace Locator.Api.Infrastructure.Tests.Landmark
             var context = new InMemoryDBContext();
             var lmRepo = new LandmarkRepository(context);
 
-            var result = lmRepo.GetDistanceAsync(startingLandMark, endingLandMark, viaLandMarks);
+            var result = lmRepo.GetDistanceAsync(startingLandMark, endingLandMark, viaLandMarks).Result;
             if (distance.HasValue)
             {
-                result.Result.Should().Be(distance);
+                result.Should().Be(distance);
             }
             else
             {

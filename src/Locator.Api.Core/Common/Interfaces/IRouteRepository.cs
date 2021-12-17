@@ -1,4 +1,5 @@
-﻿using Locator.Api.Domain.Entities;
+﻿using Locator.Api.Core.Locator.Models;
+using Locator.Api.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,6 @@ namespace Locator.Api.Core.Common.Interfaces
 
         Task<IEnumerable<string>> GetRoutesAsync(Landmark startingLandMark, Landmark endingLandMark);
 
-        Task<int> GetNoOfRoutesAsync(Landmark startingLandMark, Landmark endingLandMark, int? maxStops);
+        Task<RoutePath> GetNoOfRoutesAsync(Landmark startingLandMark, Landmark endingLandMark, int? maxStops);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Locator.Api.Core.Common.Interfaces;
+using Locator.Api.Core.Locator.Models;
 using Locator.Api.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,25 +25,26 @@ namespace Locator.Api.Infrastructure.Locator.Repository
             return await Task.Run(() => _context.Routes.ToList());
         }
 
-        public async Task<int> GetNoOfRoutesAsync(Landmark startingLandMark, Landmark endingLandMark, int? maxStops)
+        public async Task<RoutePath> GetNoOfRoutesAsync(Landmark startingLandMark, Landmark endingLandMark, int? maxStops)
         {
-            int noOfRoutes = 0;
+            var routePath = new RoutePath();
             var routes = await GetRoutesAsync(startingLandMark, endingLandMark);
+            var paths = new List<string>();
             if (routes != null && routes.Any())
             {
                 if (!maxStops.HasValue)
-                {
-                    return routes.Count();
+                {                    
+                    return new RoutePath() { NoOfRoutes = routes.Count() , Routes = routes };
                 }
                 routes.ToList().ForEach(route =>
                 {
-                    if (route.Split("->").Length >= maxStops + 2)
+                    if (route.Split("->").Length >= maxStops + 2) // +2 is for including starting and ending landmarks
                     {
-                        noOfRoutes++;
+                        paths.Add(route);                        
                     }
                 });
             }
-            return noOfRoutes;
+            return new RoutePath() { NoOfRoutes = paths.Count(), Routes = paths };
         }
         public async Task<IEnumerable<string>> GetRoutesAsync(Landmark startingLandMark, Landmark endingLandMark)
         {

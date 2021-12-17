@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Locator.Api.Core.Locator.Models;
 using Locator.Api.Infrastructure.Locator.Repository;
 using Locator.Api.Infrastructure.Persistance;
 using System;
@@ -42,14 +43,14 @@ namespace Locator.Api.Infrastructure.Tests.Route
 
         [Theory]
         [ClassData(typeof(RouteRepositoryTestData2))]
-        public void GetNoOfRoutesAsync_Test(LM.Landmark startLandmark, LM.Landmark endLandmark, int? maxStops, int expected)
+        public void GetNoOfRoutesAsync_Test(LM.Landmark startLandmark, LM.Landmark endLandmark, int? maxStops, RoutePath expected)
         {
             var context = new InMemoryDBContext();
             var lmRepo = new LandmarkRepository(context);
             var routesRepo = new RouteRepository(context, lmRepo);
 
             var result = routesRepo.GetNoOfRoutesAsync(startLandmark, endLandmark, maxStops).Result;
-            result.Should().Be(expected);
+            result.NoOfRoutes.Should().Be(expected.NoOfRoutes);
         }
     }
 }

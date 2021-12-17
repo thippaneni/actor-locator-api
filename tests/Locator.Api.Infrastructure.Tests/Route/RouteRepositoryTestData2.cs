@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Locator.Api.Core.Locator.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +18,14 @@ namespace Locator.Api.Infrastructure.Tests.Route
                 new LM.Landmark() {Name = "A", Code = "A" },
                 new LM.Landmark() {Name = "C", Code = "C" },
                 2,
-                2
+                new RoutePath(){NoOfRoutes = 2, Routes = new List<string>() { "A->B->C", "A->E->B->C" } }
             };
             yield return new object[]
             {
                 new LM.Landmark() {Name = "A", Code = "A" },
                 new LM.Landmark() {Name = "C", Code = "C" },
                 null,
-                3
+                new RoutePath(){NoOfRoutes = 3, Routes = new List<string>() { "A->B->C", "A->D->E->B->C", "A->E->B->C" } }
             };
         }
 
