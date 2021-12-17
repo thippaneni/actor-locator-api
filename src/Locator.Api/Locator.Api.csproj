@@ -5,7 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Locator.Api.Contracts\Locator.Api.Contracts.csproj" />
+    <ProjectReference Include="..\Locator.Api.Core\Locator.Api.Core.csproj" />
+    <ProjectReference Include="..\Locator.Api.Infrastructure\Locator.Api.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
