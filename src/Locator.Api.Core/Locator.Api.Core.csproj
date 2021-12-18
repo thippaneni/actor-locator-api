@@ -13,7 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Locator.Api.Contracts\Locator.Api.Contracts.csproj" />
     <ProjectReference Include="..\Locator.Api.Domain\Locator.Api.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\Exceptions\" />
   </ItemGroup>
 
 </Project>

@@ -19,9 +19,10 @@ namespace Locator.Api.Core.Locator.QueryHandlers
         {
             _landmarkRepository = landmarkRepository;
         }
+
         public Task<int?> Handle(GetDistanceBwLandmarksQuery request, CancellationToken cancellationToken)
         {
-            return _landmarkRepository.GetDistanceAsync(request.startingLandMark, request.endingLandMark, request.viaLandMarks);
+            return _landmarkRepository.GetDistanceAsync(request.StartingLandMark, request.EndingLandMark, request.ViaLandMarks);
         }
     }
 }

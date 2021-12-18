@@ -11,7 +11,8 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using FluentValidation.AspNetCore;
+using Locator.Api.Core.Locator.Queries.Validators;
 
 namespace Locator.Api
 {
@@ -29,12 +30,17 @@ namespace Locator.Api
         {
             services.AddInfrastructure(Configuration);
             services.AddControllers();
+            services.AddFluentValidation(x =>
+            {
+                x.DisableDataAnnotationsValidation = true;
+                x.RegisterValidatorsFromAssemblyContaining<GetDistanceBwLandmarksQueryValidator>();
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Locator.Api", Version = "v1" });
             });            
             
-            services.AddCore(Configuration);
+            services.AddCore();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
