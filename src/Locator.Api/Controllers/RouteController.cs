@@ -36,10 +36,7 @@ namespace Locator.Api.Controllers
                 return BadRequest("Starting and Ending landmarks should be different");
             }
 
-            var startingLandMarkdto = new Landmark() { Code = request.StatingLanmarkCode, Name = request.StatingLanmarkCode };
-            var endingLandMarkdto = new Landmark() { Code = request.EndingLanmarkCode, Name = request.EndingLanmarkCode };
-
-            var query = new GetNoOfRoutesBwLandmarksQuery(startingLandMarkdto, endingLandMarkdto, request.MaxStops);
+            var query = new GetNoOfRoutesBwLandmarksQuery(request);
             var result = await _mediatr.Send(query);
 
             var response = new GetNoOfRoutesBwLandmarksResponse() { NoOfRoutes = result.NoOfRoutes, Routes = result.Routes };

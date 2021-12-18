@@ -40,21 +40,9 @@ namespace Locator.Api.Controllers
             if (request.ViaLandmarkCodes.Count() != request.ViaLandmarkCodes.Distinct().Count())
             {
                 return BadRequest("A given via Landmark Codes should not appear more than once");
-            }
+            }   
 
-
-            // Automapper
-            var startingLandMarkdto = new Landmark() { Code = request.StatingLanmarkCode, Name = request.StatingLanmarkCode }; 
-            var endingLandMarkdto = new Landmark() { Code = request.EndingLanmarkCode, Name = request.EndingLanmarkCode };
-            var viaLandMarksdto = new List<Landmark>();
-            if (request.ViaLandmarkCodes !=null && request.ViaLandmarkCodes.Any())
-            {
-                request.ViaLandmarkCodes.ToList().ForEach(lm=> {
-                    viaLandMarksdto.Add(new Landmark() {Code = lm, Name = lm });
-                });
-            }            
-
-            var query = new GetDistanceBwLandmarksQuery(startingLandMarkdto, endingLandMarkdto, viaLandMarksdto);
+            var query = new GetDistanceBwLandmarksQuery(request);
             var result = await _mediatr.Send(query);
 
             var disatnce = "Path not Found";

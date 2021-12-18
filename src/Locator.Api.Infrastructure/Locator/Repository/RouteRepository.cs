@@ -38,7 +38,7 @@ namespace Locator.Api.Infrastructure.Locator.Repository
                 }
                 routes.ToList().ForEach(route =>
                 {
-                    if (route.Split("->").Length >= maxStops + 2) // +2 is for including starting and ending landmarks
+                    if (route.Split("->").Length <= maxStops + 2) // +2 is for including starting and ending landmarks
                     {
                         paths.Add(route);                        
                     }

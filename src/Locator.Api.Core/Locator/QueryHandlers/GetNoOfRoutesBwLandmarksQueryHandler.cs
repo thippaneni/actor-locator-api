@@ -22,7 +22,7 @@ namespace Locator.Api.Core.Locator.QueryHandlers
 
         public Task<RoutePath> Handle(GetNoOfRoutesBwLandmarksQuery request, CancellationToken cancellationToken)
         {
-            return _routeRepository.GetNoOfRoutesAsync(request.startingLandMark, request.endingLandMark, request.maxStops);
+            return _routeRepository.GetNoOfRoutesAsync(request.StartingLandMark, request.EndingLandMark, request.MaxStops);
         }
         
     }
