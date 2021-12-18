@@ -31,6 +31,10 @@ Image View
 5. FluentAssertions
 6. And Clean Architecture pattern used in solution design
 
+**Prerequisites to build this solution locally**
+1. .Net5 sdk - https://dotnet.microsoft.com/en-us/download/dotnet/5.0
+2. Visual Studio 2019
+
 Solution deployd on aws (using EBS) - http://locatorapi.ap-south-1.elasticbeanstalk.com/swagger/index.html
 ![image](https://user-images.githubusercontent.com/10783656/146644939-825f4b06-15d9-4aa6-9f60-1bc560fdd453.png)
 ![image](https://user-images.githubusercontent.com/10783656/146644957-8100d5ba-dcdd-4242-9dc9-679c24b152f3.png)
