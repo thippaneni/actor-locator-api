@@ -5,18 +5,23 @@ using Locator.Api.Infrastructure.Locator.Repository;
 using Locator.Api.Infrastructure.Persistance;
 using FluentAssertions;
 using System.Linq;
+using System;
 
 namespace Locator.Api.Infrastructure.Tests.Landmark
 {
     public class LandmarkRepositoryTest
     {
+        private InMemoryDBContext _context;
+        private LandmarkRepository _lmRepo;
+        public LandmarkRepositoryTest()
+        {
+            _context = new InMemoryDBContext();
+            _lmRepo = new LandmarkRepository(_context);
+        }
         [Fact]
         public void GetAllLandMarks_Test_AllLandMarks_Should_Be_5()
         {
-            var context = new InMemoryDBContext();
-            var lmRepo = new LandmarkRepository(context);
-
-            var lms = lmRepo.GetAllLandMarksAsync().Result;
+            var lms = _lmRepo.GetAllLandMarksAsync().Result;
             lms.Should().NotBeNull();
             lms.Count().Should().Be(5);
         }
@@ -25,10 +30,7 @@ namespace Locator.Api.Infrastructure.Tests.Landmark
         [ClassData(typeof(LandmarkRepositoryTestData))]
         public void GetAdjecentLandMarksAsync_Test(LM.Landmark landmark, List<string> adjLandmrks)
         {
-            var context = new InMemoryDBContext();
-            var lmRepo = new LandmarkRepository(context);
-
-            var result = lmRepo.GetAdjecentLandMarksAsync(landmark).Result;
+            var result = _lmRepo.GetAdjecentLandMarksAsync(landmark).Result;
             result.Should().NotBeNull();
             result.Count().Should().Be(adjLandmrks.Count);
             for (int i = 0; i < result.Count(); i++)
@@ -41,10 +43,8 @@ namespace Locator.Api.Infrastructure.Tests.Landmark
         [ClassData(typeof(LandmarkRepositoryTestData2))]
         public void GetDistanceAsync_Test(LM.Landmark startingLandMark, LM.Landmark endingLandMark, IEnumerable<LM.Landmark> viaLandMarks, int? distance)
         {
-            var context = new InMemoryDBContext();
-            var lmRepo = new LandmarkRepository(context);
 
-            var result = lmRepo.GetDistanceAsync(startingLandMark, endingLandMark, viaLandMarks).Result;
+            var result = _lmRepo.GetDistanceAsync(startingLandMark, endingLandMark, viaLandMarks).Result;
             if (distance.HasValue)
             {
                 result.Should().Be(distance);

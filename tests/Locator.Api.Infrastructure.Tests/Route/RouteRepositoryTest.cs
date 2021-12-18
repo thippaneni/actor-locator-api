@@ -14,26 +14,27 @@ namespace Locator.Api.Infrastructure.Tests.Route
 {
     public class RouteRepositoryTest
     {
+        private InMemoryDBContext _context;
+        private LandmarkRepository _lmRepo;
+        private RouteRepository _routesRepo;
+        public RouteRepositoryTest()
+        {
+            _context = new InMemoryDBContext();
+            _lmRepo = new LandmarkRepository(_context);
+            _routesRepo = new RouteRepository(_context, _lmRepo);
+        }
         [Fact]
         public void GetAllRoutes_Test_AllRoutes_Should_Be_9()
         {
-            var context = new InMemoryDBContext();
-            var lmRepo = new LandmarkRepository(context);
-            var routesRepo = new RouteRepository(context, lmRepo);
-
-            var routes = routesRepo.GetAllRoutesAsync().Result;
+            var routes = _routesRepo.GetAllRoutesAsync().Result;
             routes.Should().NotBeNull();
             routes.Count().Should().Be(9);
         }
         [Theory]
         [ClassData(typeof(RouteRepositoryTestData))]
         public void GetRoutesAsync_Test(LM.Landmark startLandmark, LM.Landmark endLandmark, List<string> routes)
-        {
-            var context = new InMemoryDBContext();
-            var lmRepo = new LandmarkRepository(context);
-            var routesRepo = new RouteRepository(context, lmRepo);
-
-            var result = routesRepo.GetRoutesAsync(startLandmark, endLandmark).Result;
+        {            
+            var result = _routesRepo.GetRoutesAsync(startLandmark, endLandmark).Result;
             result.Should().NotBeNull();
             for (int i = 0; i < routes.Count(); i++)
             {
@@ -44,12 +45,8 @@ namespace Locator.Api.Infrastructure.Tests.Route
         [Theory]
         [ClassData(typeof(RouteRepositoryTestData2))]
         public void GetNoOfRoutesAsync_Test(LM.Landmark startLandmark, LM.Landmark endLandmark, int? maxStops, RoutePath expected)
-        {
-            var context = new InMemoryDBContext();
-            var lmRepo = new LandmarkRepository(context);
-            var routesRepo = new RouteRepository(context, lmRepo);
-
-            var result = routesRepo.GetNoOfRoutesAsync(startLandmark, endLandmark, maxStops).Result;
+        {            
+            var result = _routesRepo.GetNoOfRoutesAsync(startLandmark, endLandmark, maxStops).Result;
             result.NoOfRoutes.Should().Be(expected.NoOfRoutes);
         }
     }

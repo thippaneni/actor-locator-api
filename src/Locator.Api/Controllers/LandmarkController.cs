@@ -52,8 +52,7 @@ namespace Locator.Api.Controllers
                 request.ViaLandmarkCodes.ToList().ForEach(lm=> {
                     viaLandMarksdto.Add(new Landmark() {Code = lm, Name = lm });
                 });
-            }
-            
+            }            
 
             var query = new GetDistanceBwLandmarksQuery(startingLandMarkdto, endingLandMarkdto, viaLandMarksdto);
             var result = await _mediatr.Send(query);
