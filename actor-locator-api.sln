@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Locator.Api.Infrastructure.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Locator.Api.Contracts", "src\Locator.Api.Contracts\Locator.Api.Contracts.csproj", "{2B54AE8E-8983-4BA8-A285-1B248EE19BF5}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{31961D09-CF14-4FDE-AC42-9BD180CAD2F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{2B54AE8E-8983-4BA8-A285-1B248EE19BF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B54AE8E-8983-4BA8-A285-1B248EE19BF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B54AE8E-8983-4BA8-A285-1B248EE19BF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31961D09-CF14-4FDE-AC42-9BD180CAD2F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31961D09-CF14-4FDE-AC42-9BD180CAD2F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31961D09-CF14-4FDE-AC42-9BD180CAD2F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31961D09-CF14-4FDE-AC42-9BD180CAD2F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
