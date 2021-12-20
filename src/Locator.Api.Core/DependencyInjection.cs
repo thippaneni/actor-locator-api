@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using MediatR;
 using FluentValidation;
+using System.Reflection;
 
 namespace Locator.Api.Core
 {
@@ -11,8 +12,7 @@ namespace Locator.Api.Core
     {
         public static IServiceCollection AddCore(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddMediatR(typeof(ILandmarkRepository));
-            //services.AddValidatorsFromAssembly(typeof(IValidator).Assembly);
+            services.AddMediatR(Assembly.GetExecutingAssembly());
             return services;
         }
     }
