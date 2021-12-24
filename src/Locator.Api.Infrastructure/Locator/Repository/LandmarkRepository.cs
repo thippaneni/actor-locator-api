@@ -61,8 +61,8 @@ namespace Locator.Api.Infrastructure.Locator.Repository
         }
         public async Task<IEnumerable<Landmark>> GetAdjecentLandMarksAsync(Landmark landmark)
         {
-            var allLandMarks = _context.Routes.ToList();
-            var startinglandmarks = allLandMarks.Where(d => d.StartLandmark.Code == landmark.Code);
+            var routes = _context.Routes.ToList();
+            var startinglandmarks = routes.Where(d => d.StartLandmark.Code == landmark.Code);
             var adjLandmarks = new List<Landmark>();
             startinglandmarks.ToList().ForEach(lm => adjLandmarks.Add(lm.EndLandmark));
             return await Task.FromResult(adjLandmarks);
