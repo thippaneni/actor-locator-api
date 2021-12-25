@@ -35,6 +35,7 @@ namespace Locator.Api
             });            
             
             services.AddCore(Configuration);
+            services.AddHealthChecks();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +51,7 @@ namespace Locator.Api
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseHealthChecks("/health");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
