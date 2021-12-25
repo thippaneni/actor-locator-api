@@ -21,6 +21,41 @@ namespace Locator.Api.Controllers
             _mediatr = mediatr;
         }
 
+        [HttpGet]
+        [Route("GetAll")]
+        public async Task<ActionResult<GetAllLandmarksResponse>> GetAllRoutes()
+        {
+            var query = new GetAllRoutesQuery();
+            var result = await _mediatr.Send(query);
+            var response = new GetAllRoutesResponse();
+            var routes = new List<RouteResponse>();
+            if (result != null && result.Any())
+            {
+                result.ToList().ForEach(route => {
+                    routes.Add(new RouteResponse()
+                    {
+                        StartLandmark = new LandmarkResponse()
+                        {
+                            Code = route.StartLandmark.Code,
+                            Id = route.StartLandmark.Id,
+                            Name = route.StartLandmark.Name
+                        },
+                        EndLandmark = new LandmarkResponse()
+                        {
+                            Code = route.EndLandmark.Code,
+                            Id = route.EndLandmark.Id,
+                            Name = route.EndLandmark.Name
+                        },
+                        Distance = route.Distance,
+                        Id = route.Id,
+                        RouteCode = route.RouteCode
+                    });
+                });
+            }
+            response.Data = routes;
+            return Ok(response);
+        }
+
         [HttpPost]
         [Route("GetNoOfRoutesBwLandmarks")]
         public async Task<ActionResult<GetNoOfRoutesBwLandmarksResponse>> GetNoOfRoutesBwLandmarks([FromBody] GetNoOfRoutesBwLandmarksRequest request)

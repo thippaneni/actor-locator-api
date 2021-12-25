@@ -1,7 +1,6 @@
 ﻿using Locator.Api.Contracts.Requests;
 using Locator.Api.Contracts.Responses;
 using Locator.Api.Core.Locator.Queries;
-using Locator.Api.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,6 +18,24 @@ namespace Locator.Api.Controllers
         public LandmarkController(IMediator mediatr)
         {
             _mediatr = mediatr;
+        }
+
+        [HttpGet]
+        [Route("GetAll")]
+        public async Task<ActionResult<GetAllLandmarksResponse>> GetAllLandmarks()
+        {
+            var query = new GetAllLandMarksQuery();
+            var result = await _mediatr.Send(query);
+            var response = new GetAllLandmarksResponse();
+            var landmarks = new List<LandmarkResponse>();
+            if (result != null && result.Any())
+            {
+                result.ToList().ForEach(lm=> {
+                    landmarks.Add(new LandmarkResponse() {Code = lm.Code, Id = lm.Id, Name = lm.Name });
+                });
+            }
+            response.Data = landmarks;
+            return Ok(response);
         }
 
         [HttpPost]

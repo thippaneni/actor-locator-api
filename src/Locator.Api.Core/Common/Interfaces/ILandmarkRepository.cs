@@ -13,6 +13,6 @@ namespace Locator.Api.Core.Common.Interfaces
 
         Task<int?> GetDistanceAsync(Landmark startingLandMark, Landmark endingLandMark, IEnumerable<Landmark> viaLandMarks);
 
-        Task<IEnumerable<Landmark>> GetAdjecentLandMarksAsync(Landmark landmae);
+        Task<IEnumerable<Landmark>> GetAdjecentLandMarksAsync(Landmark landmark);
     }
 }
