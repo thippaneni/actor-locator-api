@@ -3,7 +3,6 @@ using Locator.Api.Contracts.Responses;
 using Locator.Api.Core.Locator.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -43,30 +42,43 @@ namespace Locator.Api.Controllers
         public async Task<ActionResult<GetDistanceBwLandmarksResponse>> GetDistanceBwLandmarks([FromBody] GetDistanceBwLandmarksRequest request)
         {
             //validate request
-            if (request == null || string.IsNullOrEmpty(request.EndingLanmarkCode) || string.IsNullOrEmpty(request.EndingLanmarkCode)
-                || request.ViaLandmarkCodes == null || !request.ViaLandmarkCodes.Any())
+            var validationMessage = ValidateRequest(request);
+            if (!string.IsNullOrEmpty(validationMessage))
             {
-                return BadRequest("input values should not be empty or null");
+                return BadRequest(validationMessage);
             }
 
-            if (request.StatingLanmarkCode.Equals(request.EndingLanmarkCode))
-            {
-                return BadRequest("Starting and Ending landmarks should be different");
-            }
-
-            if (request.ViaLandmarkCodes.Count() != request.ViaLandmarkCodes.Distinct().Count())
-            {
-                return BadRequest("A given via Landmark Codes should not appear more than once");
-            }   
-
+            //send query
             var query = new GetDistanceBwLandmarksQuery(request);
             var result = await _mediatr.Send(query);
 
+            //map response
             var disatnce = "Path not Found";
             if (result.HasValue)
                 disatnce = result.Value.ToString();
             var response = new GetDistanceBwLandmarksResponse() { Disatnce = disatnce };
             return Ok(response);
         }
+        private string ValidateRequest(GetDistanceBwLandmarksRequest request)
+        {
+            string validationMessage = string.Empty;
+            if (request == null || string.IsNullOrEmpty(request.EndingLanmarkCode) || string.IsNullOrEmpty(request.EndingLanmarkCode)
+                || request.ViaLandmarkCodes == null || !request.ViaLandmarkCodes.Any())
+            {
+                validationMessage = "input values should not be empty or null";
+            }
+
+            if (request.StatingLanmarkCode.Equals(request.EndingLanmarkCode))
+            {
+                validationMessage = "Starting and Ending landmarks should be different";
+            }
+
+            if (request.ViaLandmarkCodes.Count() != request.ViaLandmarkCodes.Distinct().Count())
+            {
+                validationMessage = "A given via Landmark Codes should not appear more than once";
+            }
+            return validationMessage;
+        }
     }
 }
+

@@ -4,7 +4,6 @@ using Locator.Api.Core.Locator.Queries;
 using Locator.Api.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -61,21 +60,34 @@ namespace Locator.Api.Controllers
         public async Task<ActionResult<GetNoOfRoutesBwLandmarksResponse>> GetNoOfRoutesBwLandmarks([FromBody] GetNoOfRoutesBwLandmarksRequest request)
         {
             //validate request
+            var validationMessage = ValidateRequest(request);
+            if (!string.IsNullOrEmpty(validationMessage))
+            {
+                return BadRequest(validationMessage);
+            }
+
+            //send query
+            var query = new GetNoOfRoutesBwLandmarksQuery(request);
+            var result = await _mediatr.Send(query);
+
+            //map response
+            var response = new GetNoOfRoutesBwLandmarksResponse() { NoOfRoutes = result.NoOfRoutes, Routes = result.Routes };
+            return Ok(response);
+        }
+
+        private string ValidateRequest(GetNoOfRoutesBwLandmarksRequest request)
+        {
+            string validationMessage = string.Empty;
             if (request == null || string.IsNullOrEmpty(request.EndingLanmarkCode) || string.IsNullOrEmpty(request.EndingLanmarkCode))
             {
-                return BadRequest("input values should not be empty or null");
+                validationMessage = "input values should not be empty or null";
             }
 
             if (request.StatingLanmarkCode.Equals(request.EndingLanmarkCode))
             {
-                return BadRequest("Starting and Ending landmarks should be different");
+                validationMessage = "Starting and Ending landmarks should be different";
             }
-
-            var query = new GetNoOfRoutesBwLandmarksQuery(request);
-            var result = await _mediatr.Send(query);
-
-            var response = new GetNoOfRoutesBwLandmarksResponse() { NoOfRoutes = result.NoOfRoutes, Routes = result.Routes };
-            return Ok(response);
+            return validationMessage;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Locator.Api.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {            
             services.AddScoped<IApplicationDbContext, InMemoryDBContext>();
             services.AddScoped<IRouteRepository, RouteRepository>();
