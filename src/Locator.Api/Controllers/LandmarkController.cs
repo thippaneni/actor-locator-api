@@ -3,6 +3,8 @@ using Locator.Api.Contracts.Responses;
 using Locator.Api.Core.Locator.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,15 +16,18 @@ namespace Locator.Api.Controllers
     public class LandmarkController : ControllerBase
     {
         private readonly IMediator _mediatr;
-        public LandmarkController(IMediator mediatr)
+        private readonly ILogger<LandmarkController> _logger;
+        public LandmarkController(IMediator mediatr, ILogger<LandmarkController> logger)
         {
             _mediatr = mediatr;
+            _logger = logger;
         }
 
         [HttpGet]
         [Route("GetAll")]
         public async Task<ActionResult<GetAllLandmarksResponse>> GetAllLandmarks()
         {
+            _logger.LogInformation($"GetAllLandmarks invoked at {DateTime.Now}");
             var query = new GetAllLandMarksQuery();
             var result = await _mediatr.Send(query);
             var response = new GetAllLandmarksResponse();
@@ -41,10 +46,12 @@ namespace Locator.Api.Controllers
         [Route("GetDistanceBwLandmarks")]
         public async Task<ActionResult<GetDistanceBwLandmarksResponse>> GetDistanceBwLandmarks([FromBody] GetDistanceBwLandmarksRequest request)
         {
+            _logger.LogInformation($"GetDistanceBwLandmarks invoked at {DateTime.Now}");
             //validate request
             var validationMessage = ValidateRequest(request);
             if (!string.IsNullOrEmpty(validationMessage))
             {
+                _logger.LogError(validationMessage);
                 return BadRequest(validationMessage);
             }
 

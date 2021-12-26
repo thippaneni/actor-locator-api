@@ -4,6 +4,8 @@ using Locator.Api.Core.Locator.Queries;
 using Locator.Api.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,15 +17,18 @@ namespace Locator.Api.Controllers
     public class RouteController : ControllerBase
     {
         private readonly IMediator _mediatr;
-        public RouteController(IMediator mediatr)
+        private readonly ILogger<RouteController> _logger;
+        public RouteController(IMediator mediatr, ILogger<RouteController> logger)
         {
             _mediatr = mediatr;
+            _logger = logger;
         }
 
         [HttpGet]
         [Route("GetAll")]
         public async Task<ActionResult<GetAllLandmarksResponse>> GetAllRoutes()
         {
+            _logger.LogInformation($"GetAllRoutes invoked at {DateTime.Now}");
             var query = new GetAllRoutesQuery();
             var result = await _mediatr.Send(query);
             var response = new GetAllRoutesResponse();
@@ -59,10 +64,12 @@ namespace Locator.Api.Controllers
         [Route("GetNoOfRoutesBwLandmarks")]
         public async Task<ActionResult<GetNoOfRoutesBwLandmarksResponse>> GetNoOfRoutesBwLandmarks([FromBody] GetNoOfRoutesBwLandmarksRequest request)
         {
+            _logger.LogInformation($"GetNoOfRoutesBwLandmarks invoked at {DateTime.Now}");
             //validate request
             var validationMessage = ValidateRequest(request);
             if (!string.IsNullOrEmpty(validationMessage))
             {
+                _logger.LogWarning(validationMessage);
                 return BadRequest(validationMessage);
             }
 

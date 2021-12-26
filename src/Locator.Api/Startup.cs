@@ -39,7 +39,7 @@ namespace Locator.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -51,6 +51,8 @@ namespace Locator.Api
             app.UseRouting();
 
             app.UseAuthorization();
+            loggerFactory.AddAWSProvider(Configuration.GetAWSLoggingConfigSection(), 
+                formatter: (logLevel, message, exception) => $"[{DateTime.Now} {logLevel} {message} {exception?.Message} {exception?.StackTrace}]");
             app.UseHealthChecks("/health");
             app.UseEndpoints(endpoints =>
             {
