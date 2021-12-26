@@ -1,4 +1,7 @@
 # actor-locator-api
+**Build Status**
+[![Locator-Api Build & Deployment](https://github.com/thippaneni/actor-locator-api/actions/workflows/cicd.yml/badge.svg?branch=main)](https://github.com/thippaneni/actor-locator-api/actions/workflows/cicd.yml)
+
 **Problem -**
 API to locate the actors in the game, its a part of Multi-player Game
 The goal is to build an API to locate the actors in the game, All actors are tagged to the Landmarks.
