@@ -37,7 +37,7 @@ namespace Locator.Api.Core.Tests.Locator.QueryHandlers
         [Fact]
         public void GetDistanceBwLandmarksQueryHandler_Handle_Request_Test()
         {
-            var request = new GetDistanceBwLandmarksRequest() {EndingLanmarkCode = "C", StatingLanmarkCode ="A",ViaLandmarkCodes = new List<string>{ "B"} };
+            var request = new GetDistanceBwLandmarksRequest() { EndingLanmarkCode = "C", StatingLanmarkCode = "A", ViaLandmarkCodes = new List<string> { "B" } };
            
             var query = new GetDistanceBwLandmarksQuery(request);
             var cancelToken = new CancellationToken();

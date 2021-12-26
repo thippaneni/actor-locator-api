@@ -26,16 +26,18 @@ namespace Locator.Api.Infrastructure.Locator.Repository
         }
 
         public async Task<RoutePath> GetNoOfRoutesAsync(Landmark startingLandMark, Landmark endingLandMark, int? maxStops)
-        {
+        {            
+            var routes = await GetRoutesAsync(startingLandMark, endingLandMark);            
             var routePath = new RoutePath();
-            var routes = await GetRoutesAsync(startingLandMark, endingLandMark);
-            var paths = new List<string>();
             if (routes != null && routes.Any())
             {
                 if (!maxStops.HasValue)
-                {                    
-                    return new RoutePath() { NoOfRoutes = routes.Count() , Routes = routes };
+                {
+                    routePath.NoOfRoutes = routes.Count();
+                    routePath.Routes = routes;
+                    return routePath;
                 }
+                var paths = new List<string>();
                 routes.ToList().ForEach(route =>
                 {
                     if (route.Split("->").Length <= maxStops + 2) // +2 is for including starting and ending landmarks
@@ -43,14 +45,16 @@ namespace Locator.Api.Infrastructure.Locator.Repository
                         paths.Add(route);                        
                     }
                 });
+                routePath.NoOfRoutes = paths.Count();
+                routePath.Routes = paths;
             }
-            return new RoutePath() { NoOfRoutes = paths.Count(), Routes = paths };
+            return routePath;
         }
         public async Task<IEnumerable<string>> GetRoutesAsync(Landmark startingLandMark, Landmark endingLandMark)
-        {
-            var isLandmarkVisited = new Dictionary<string, bool>();
+        {            
             var landmarks = await _ILandmarkRepository.GetAllLandMarksAsync();
-            
+            var isLandmarkVisited = new Dictionary<string, bool>();
+
             landmarks.ToList().ForEach(lm => {
                 isLandmarkVisited.Add(lm.Code, false);
             });

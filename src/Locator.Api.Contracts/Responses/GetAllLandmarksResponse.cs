@@ -9,6 +9,6 @@ namespace Locator.Api.Contracts.Responses
 {
     public class GetAllLandmarksResponse
     {
-        public IEnumerable<LandmarkResponse> Data { get; set; } = new List<LandmarkResponse>();
+        public IEnumerable<LandmarkResponse> Data { get; set; }
     }
 }

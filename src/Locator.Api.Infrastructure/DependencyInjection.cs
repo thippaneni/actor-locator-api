@@ -11,7 +11,7 @@ namespace Locator.Api.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {            
-            services.AddScoped<IApplicationDbContext, InMemoryDBContext>();
+            services.AddSingleton<IApplicationDbContext, InMemoryDBContext>();
             services.AddScoped<IRouteRepository, RouteRepository>();
             services.AddScoped<ILandmarkRepository, LandmarkRepository>();
             return services;

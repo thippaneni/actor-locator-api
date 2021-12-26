@@ -10,6 +10,6 @@ namespace Locator.Api.Contracts.Requests
     {
         public string StatingLanmarkCode { get; set; }
         public string EndingLanmarkCode { get; set; }
-        public IEnumerable<string> ViaLandmarkCodes { get; set; } = new List<string>();
+        public IEnumerable<string> ViaLandmarkCodes { get; set; } 
     }
 }

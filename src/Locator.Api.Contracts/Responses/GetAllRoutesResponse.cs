@@ -8,6 +8,6 @@ namespace Locator.Api.Contracts.Responses
 {
     public class GetAllRoutesResponse
     {
-        public IEnumerable<RouteResponse> Data { get; set; } = new List<RouteResponse>();
+        public IEnumerable<RouteResponse> Data { get; set; }
     }
 }

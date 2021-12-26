@@ -9,6 +9,6 @@ namespace Locator.Api.Contracts.Responses
     public class GetNoOfRoutesBwLandmarksResponse
     {
         public int NoOfRoutes { get; set; }
-        public IEnumerable<string> Routes { get; set; } = new List<string>();
+        public IEnumerable<string> Routes { get; set; }
     }
 }

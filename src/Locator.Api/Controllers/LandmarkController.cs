@@ -30,15 +30,13 @@ namespace Locator.Api.Controllers
             _logger.LogInformation($"GetAllLandmarks invoked at {DateTime.Now}");
             var query = new GetAllLandMarksQuery();
             var result = await _mediatr.Send(query);
-            var response = new GetAllLandmarksResponse();
+            
             var landmarks = new List<LandmarkResponse>();
-            if (result != null && result.Any())
-            {
-                result.ToList().ForEach(lm=> {
-                    landmarks.Add(new LandmarkResponse() {Code = lm.Code, Id = lm.Id, Name = lm.Name });
-                });
-            }
-            response.Data = landmarks;
+            result.ToList().ForEach(lm => {
+                landmarks.Add(new LandmarkResponse() { Code = lm.Code, Id = lm.Id, Name = lm.Name });
+            });
+
+            var response = new GetAllLandmarksResponse() { Data = landmarks };
             return Ok(response);
         }
 
