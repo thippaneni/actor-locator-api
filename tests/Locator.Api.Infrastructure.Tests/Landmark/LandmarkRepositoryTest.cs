@@ -44,15 +44,8 @@ namespace Locator.Api.Infrastructure.Tests.Landmark
         public void GetDistanceAsync_Test(LM.Landmark startingLandMark, LM.Landmark endingLandMark, IEnumerable<LM.Landmark> viaLandMarks, int? distance)
         {
 
-            var result = _lmRepo.GetDistanceAsync(startingLandMark, endingLandMark, viaLandMarks).Result;
-            if (distance.HasValue)
-            {
-                result.Should().Be(distance);
-            }
-            else
-            {
-                result.Should().BeNull();
-            }
+            var result = _lmRepo.GetDistanceAsync(startingLandMark, endingLandMark, viaLandMarks).Result;           
+            result.Should().Be(distance);
         }
     }
 }
