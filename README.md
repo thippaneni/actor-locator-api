@@ -22,9 +22,14 @@ This Program should be able to answer following question -
 Sample input to test with 
   AB3, BC9, CD3, DE6, AD4, DA5, CE2, AE4,EB1
  
-Image View
+**Image View**
 
 ![image](https://user-images.githubusercontent.com/10783656/146644318-fe3a0e60-5191-4cb6-abf9-5858d0976aa6.png)
+
+**Table Format**
+
+![image](https://user-images.githubusercontent.com/10783656/147436096-26c768a0-5c5a-4c6d-bdb8-adc25a5fa61c.png)                 ![image](https://user-images.githubusercontent.com/10783656/147436153-77232799-525c-4898-a83e-90c3425b669d.png)
+
 
 **Technologies Used**
 1. ASP.NET Core 5
