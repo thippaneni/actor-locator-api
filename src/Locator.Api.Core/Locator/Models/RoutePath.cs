@@ -9,6 +9,6 @@ namespace Locator.Api.Core.Locator.Models
     public class RoutePath
     {
         public int NoOfRoutes { get; set; }
-        public IEnumerable<string> Routes { get; set; } = new List<string>();
+        public IEnumerable<string> Routes { get; set; }
     }
 }
