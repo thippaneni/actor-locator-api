@@ -11,7 +11,7 @@ namespace Locator.Api.Core.Common.Interfaces
 {
     public interface IApplicationDbContext
     {
-        IEnumerable<Route> Routes { get; init; }
-        IEnumerable<Landmark> LandMarks { get; init; }
+        DbSet<Route> Routes { get; set; }
+        DbSet<Landmark> LandMarks { get; set; }
     }
 }

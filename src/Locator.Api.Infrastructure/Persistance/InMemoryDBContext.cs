@@ -11,8 +11,8 @@ namespace Locator.Api.Infrastructure.Persistance
 {
     public class InMemoryDBContext : IApplicationDbContext
     {        
-        public IEnumerable<Route> Routes { get; init; }
-        public IEnumerable<Landmark> LandMarks { get; init; }
+        public DbSet<Route> Routes { get; set; }
+        public DbSet<Landmark> LandMarks { get; set; }
 
         public InMemoryDBContext()
         {
