@@ -10,7 +10,7 @@ namespace Locator.Api.Infrastructure.Tests
         private InMemoryDBContext _context;
         public InMemoryDBContextTest()
         {
-            _context = new InMemoryDBContext();
+            _context = new InMemoryDBContext(null);
         }
         [Fact]
         public void Routes_Test_Routes_Should_Be_9()

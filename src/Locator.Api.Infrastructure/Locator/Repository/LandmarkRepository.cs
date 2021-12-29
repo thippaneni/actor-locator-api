@@ -17,55 +17,25 @@ namespace Locator.Api.Infrastructure.Locator.Repository
         {
             _context = context;
         }
-        public async Task<IEnumerable<Landmark>> GetAllLandMarksAsync()
+        public IEnumerable<Landmark> GetAllLandMarksAsync()
         {
-            return await Task.Run(() => _context.LandMarks.ToList());
+            return _context.LandMarks.ToList();
         }
-
-        public Task<int?> GetDistanceAsync(Landmark startingLandMark, Landmark endingLandMark, IEnumerable<Landmark> viaLandMarks)
-        {            
-            var codes = new List<string>();
-            var tempLM = startingLandMark;
-            viaLandMarks.ToList().ForEach(vlm => 
-            {
-                codes.Add(tempLM.Code + vlm.Code);
-                tempLM.Code = vlm.Code;
-                tempLM.Name = vlm.Name;
-            });
-            codes.Add(tempLM.Code + endingLandMark.Code);
-
-            int? distance = 0;
-            bool rootFound = false;
-            var routes = _context.Routes.ToList();
-
-            codes.ForEach(code => 
-            {
-                rootFound = false;
-                foreach (var route in routes)
-                {
-                    if (route.RouteCode == code)
-                    {
-                        distance += route.Distance;
-                        rootFound = true;
-                    }
-                }
-            });
-
-            if (!rootFound)
-            {
-                distance = null;
-            }
-            
-            return Task.FromResult(distance);
-
+        public Landmark GetLandMarkByCodeAsync(string code)
+        {
+            return _context.LandMarks.ToList().SingleOrDefault(lm => lm.Code == code);
         }
-        public async Task<IEnumerable<Landmark>> GetAdjecentLandMarksAsync(Landmark landmark)
+        public IEnumerable<Landmark> GetAdjecentLandMarksAsync(Landmark landmark)
         {
             var routes = _context.Routes.ToList();
-            var startinglandmarks = routes.Where(d => d.StartLandmark.Code == landmark.Code);
+            var startinglandmarks = routes.Where(d => d.StartLandmarkCode == landmark.Code).ToList();
             var adjLandmarks = new List<Landmark>();
-            startinglandmarks.ToList().ForEach(lm => adjLandmarks.Add(lm.EndLandmark));
-            return await Task.FromResult(adjLandmarks);
+            startinglandmarks.ForEach(lmCode => {
+                var landmark = GetLandMarkByCodeAsync(lmCode.EndLandmarkCode);
+                adjLandmarks.Add(landmark);
+            });
+           
+            return adjLandmarks;
         }
     }
 }

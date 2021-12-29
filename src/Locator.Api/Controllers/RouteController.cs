@@ -33,24 +33,25 @@ namespace Locator.Api.Controllers
             var result = await _mediatr.Send(query);            
             var routes = new List<RouteResponse>();
             result.ToList().ForEach(route => {
-                routes.Add(new RouteResponse()
+                var routeResponse = new RouteResponse()
                 {
                     StartLandmark = new LandmarkResponse()
                     {
                         Code = route.StartLandmark.Code,
-                        Id = route.StartLandmark.Id,
+                        Id = route.StartLandmark.LandmarkId,
                         Name = route.StartLandmark.Name
                     },
                     EndLandmark = new LandmarkResponse()
                     {
                         Code = route.EndLandmark.Code,
-                        Id = route.EndLandmark.Id,
+                        Id = route.EndLandmark.LandmarkId,
                         Name = route.EndLandmark.Name
                     },
                     Distance = route.Distance,
-                    Id = route.Id,
+                    Id = route.RouteId,
                     RouteCode = route.RouteCode
-                });
+                };
+                routes.Add(routeResponse);
             });
             var response = new GetAllRoutesResponse() { Data = routes};
             return Ok(response);

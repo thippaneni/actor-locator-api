@@ -5,6 +5,8 @@ using System;
 using MediatR;
 using FluentValidation;
 using System.Reflection;
+using Locator.Api.Core.Locator.Interfaces;
+using Locator.Api.Core.Locator.Services;
 
 namespace Locator.Api.Core
 {
@@ -13,6 +15,7 @@ namespace Locator.Api.Core
         public static IServiceCollection AddCore(this IServiceCollection services)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddScoped<ILocatorService, LocatorService>();
             return services;
         }
     }

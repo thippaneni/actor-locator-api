@@ -1,4 +1,6 @@
 ﻿using Locator.Api.Core.Common.Interfaces;
+using Locator.Api.Core.Locator.Interfaces;
+using Locator.Api.Core.Locator.Models;
 using Locator.Api.Core.Locator.Queries;
 using Locator.Api.Domain.Entities;
 using MediatR;
@@ -11,17 +13,17 @@ using System.Threading.Tasks;
 
 namespace Locator.Api.Core.Locator.QueryHandlers
 {
-    public class GetAllRoutesQueryHandler : IRequestHandler<GetAllRoutesQuery, IEnumerable<Route>>
+    public class GetAllRoutesQueryHandler : IRequestHandler<GetAllRoutesQuery, IEnumerable<RouteModel>>
     {
-        private readonly IRouteRepository _routeRepository;
+        private readonly ILocatorService _locatorService;
 
-        public GetAllRoutesQueryHandler(IRouteRepository routeRepository)
+        public GetAllRoutesQueryHandler(ILocatorService locatorService)
         {
-            _routeRepository = routeRepository;
+            _locatorService = locatorService;
         }
-        public Task<IEnumerable<Route>> Handle(GetAllRoutesQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<RouteModel>> Handle(GetAllRoutesQuery request, CancellationToken cancellationToken)
         {
-            return _routeRepository.GetAllRoutesAsync();
+            return await _locatorService.GetAllRoutesAsync();
         }
     }
 }

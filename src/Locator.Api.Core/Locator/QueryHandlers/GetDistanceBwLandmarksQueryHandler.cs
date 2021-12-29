@@ -1,4 +1,5 @@
 ﻿using Locator.Api.Core.Common.Interfaces;
+using Locator.Api.Core.Locator.Interfaces;
 using Locator.Api.Core.Locator.Queries;
 using MediatR;
 using System;
@@ -13,15 +14,15 @@ namespace Locator.Api.Core.Locator.QueryHandlers
     public class GetDistanceBwLandmarksQueryHandler : IRequestHandler<GetDistanceBwLandmarksQuery, int?>
     {
 
-        private readonly ILandmarkRepository _landmarkRepository;
+        private readonly ILocatorService _locatorService;
 
-        public GetDistanceBwLandmarksQueryHandler(ILandmarkRepository landmarkRepository)
+        public GetDistanceBwLandmarksQueryHandler(ILocatorService locatorService)
         {
-            _landmarkRepository = landmarkRepository;
+            _locatorService = locatorService;
         }
-        public Task<int?> Handle(GetDistanceBwLandmarksQuery request, CancellationToken cancellationToken)
+        public async Task<int?> Handle(GetDistanceBwLandmarksQuery request, CancellationToken cancellationToken)
         {
-            return _landmarkRepository.GetDistanceAsync(request.StartingLandMark, request.EndingLandMark, request.ViaLandMarks);
+            return await _locatorService.GetDistanceAsync(request.StartingLandMark, request.EndingLandMark, request.ViaLandMarks);
         }
     }
 }

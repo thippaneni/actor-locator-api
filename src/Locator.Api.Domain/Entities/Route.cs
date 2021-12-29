@@ -9,8 +9,8 @@ namespace Locator.Api.Domain.Entities
 {
     public class Route : BaseEntity
     {
-        public Landmark StartLandmark { get; set; }
-        public Landmark EndLandmark { get; set; }
+        public string StartLandmarkCode { get; set; }
+        public string EndLandmarkCode { get; set; }
         public int Distance { get; set; }
         public string RouteCode { get; set; }
     }

@@ -20,39 +20,14 @@ namespace Locator.Api.Infrastructure.Locator.Repository
             _context = context;
             _ILandmarkRepository = LandmarkRepository;
         }
-        public async Task<IEnumerable<Route>> GetAllRoutesAsync()
+        public IEnumerable<Route> GetAllRoutesAsync()
         {           
-            return await Task.Run(() => _context.Routes.ToList());
+            return _context.Routes.ToList();
         }
-
-        public async Task<RoutePath> GetNoOfRoutesAsync(Landmark startingLandMark, Landmark endingLandMark, int? maxStops)
+       
+        public IEnumerable<string> GetRoutesAsync(Landmark startingLandMark, Landmark endingLandMark)
         {            
-            var routes = await GetRoutesAsync(startingLandMark, endingLandMark);            
-            var routePath = new RoutePath();
-            if (routes != null && routes.Any())
-            {
-                if (!maxStops.HasValue)
-                {
-                    routePath.NoOfRoutes = routes.Count();
-                    routePath.Routes = routes;
-                    return routePath;
-                }
-                var paths = new List<string>();
-                routes.ToList().ForEach(route =>
-                {
-                    if (route.Split("->").Length <= maxStops + 2) // +2 is for including starting and ending landmarks
-                    {
-                        paths.Add(route);                        
-                    }
-                });
-                routePath.NoOfRoutes = paths.Count();
-                routePath.Routes = paths;
-            }
-            return routePath;
-        }
-        public async Task<IEnumerable<string>> GetRoutesAsync(Landmark startingLandMark, Landmark endingLandMark)
-        {            
-            var landmarks = await _ILandmarkRepository.GetAllLandMarksAsync();
+            var landmarks = _ILandmarkRepository.GetAllLandMarksAsync();
             var isLandmarkVisited = new Dictionary<string, bool>();
 
             landmarks.ToList().ForEach(lm => {
@@ -77,7 +52,7 @@ namespace Locator.Api.Infrastructure.Locator.Repository
 
             isLandmarkVisited[startingLandMark.Code] = true; //current route visited
 
-            foreach (var landmark in _ILandmarkRepository.GetAdjecentLandMarksAsync(startingLandMark).Result)
+            foreach (var landmark in _ILandmarkRepository.GetAdjecentLandMarksAsync(startingLandMark))
             {
                 if (!isLandmarkVisited[landmark.Code])
                 {                    

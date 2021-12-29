@@ -10,10 +10,8 @@ namespace Locator.Api.Core.Common.Interfaces
 {
     public interface IRouteRepository
     {
-        Task<IEnumerable<Route>> GetAllRoutesAsync();
+        IEnumerable<Route> GetAllRoutesAsync();
 
-        Task<IEnumerable<string>> GetRoutesAsync(Landmark startingLandMark, Landmark endingLandMark);
-
-        Task<RoutePath> GetNoOfRoutesAsync(Landmark startingLandMark, Landmark endingLandMark, int? maxStops);
+        IEnumerable<string> GetRoutesAsync(Landmark startingLandMark, Landmark endingLandMark);
     }
 }

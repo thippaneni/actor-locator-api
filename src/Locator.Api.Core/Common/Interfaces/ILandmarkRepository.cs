@@ -9,10 +9,10 @@ namespace Locator.Api.Core.Common.Interfaces
 {
     public interface ILandmarkRepository
     {
-        Task<IEnumerable<Landmark>> GetAllLandMarksAsync();
+        IEnumerable<Landmark> GetAllLandMarksAsync();
 
-        Task<int?> GetDistanceAsync(Landmark startingLandMark, Landmark endingLandMark, IEnumerable<Landmark> viaLandMarks);
+        IEnumerable<Landmark> GetAdjecentLandMarksAsync(Landmark landmark);
 
-        Task<IEnumerable<Landmark>> GetAdjecentLandMarksAsync(Landmark landmark);
+        Landmark GetLandMarkByCodeAsync(string code);
     }
 }
