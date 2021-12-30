@@ -21,15 +21,13 @@ namespace Locator.Api.Core.Locator.Services
         }
         public async Task<IEnumerable<Landmark>> GetAllLandMarksAsync()
         {
-            var result = new List<LandmarkModel>();
-            var landmarks = _landmarkRepository.GetAllLandMarksAsync();            
-            return await Task.FromResult(landmarks);
+            return await _landmarkRepository.GetAllLandMarksAsync();
         }
 
         public async Task<IEnumerable<RouteModel>> GetAllRoutesAsync()
         {
             var result = new List<RouteModel>();
-            var routes = _routeRepository.GetAllRoutesAsync();
+            var routes = await _routeRepository.GetAllRoutesAsync();
             routes.ToList().ForEach(route => {
                 var startLm = _landmarkRepository.GetLandMarkByCodeAsync(route.StartLandmarkCode);
                 var endLm = _landmarkRepository.GetLandMarkByCodeAsync(route.EndLandmarkCode);
@@ -42,7 +40,7 @@ namespace Locator.Api.Core.Locator.Services
                     RouteCode = route.RouteCode
                 });
             });
-            return await Task.FromResult(result);
+            return result;
         }
 
         public async Task<int?> GetDistanceAsync(Landmark startingLandMark, Landmark endingLandMark, IEnumerable<Landmark> viaLandMarks)
@@ -59,7 +57,7 @@ namespace Locator.Api.Core.Locator.Services
 
             int? distance = 0;
             bool rootFound = false;
-            var routes = _routeRepository.GetAllRoutesAsync();
+            var routes = await _routeRepository.GetAllRoutesAsync();
 
             codes.ForEach(code =>
             {
@@ -79,12 +77,12 @@ namespace Locator.Api.Core.Locator.Services
                 distance = null;
             }
 
-            return await Task.FromResult(distance);
+            return distance;
         }
 
         public async Task<RoutePath> GetNoOfRoutesAsync(Landmark startingLandMark, Landmark endingLandMark, int? maxStops)
         {
-            var routes = _routeRepository.GetRoutesAsync(startingLandMark, endingLandMark);
+            var routes = await GetRoutesAsync(startingLandMark, endingLandMark);
             var routePath = new RoutePath();
             if (routes != null && routes.Any())
             {
@@ -106,6 +104,48 @@ namespace Locator.Api.Core.Locator.Services
                 routePath.Routes = paths;
             }
             return await Task.FromResult(routePath);
+        }
+
+        private void GetAllRoutes(Landmark startingLandMark, Landmark endingLandMark, Dictionary<string, bool> isLandmarkVisited, List<string> routes, List<string> result)
+        {
+            if (startingLandMark.Code.Equals(endingLandMark.Code))
+            {
+                result.Add(string.Join("->", routes));
+                return;
+            }
+
+            isLandmarkVisited[startingLandMark.Code] = true; //current route visited
+
+            foreach (var landmark in _landmarkRepository.GetAdjecentLandMarksAsync(startingLandMark))
+            {
+                if (!isLandmarkVisited[landmark.Code])
+                {
+                    routes.Add(landmark.Code); // store current route
+                    GetAllRoutes(landmark, endingLandMark, isLandmarkVisited, routes, result);
+
+                    routes.Remove(landmark.Code); // remove current route
+                }
+            }
+
+            isLandmarkVisited[startingLandMark.Code] = false;
+        }
+
+        public async Task<IEnumerable<string>> GetRoutesAsync(Landmark startingLandMark, Landmark endingLandMark)
+        {
+            var landmarks = await _landmarkRepository.GetAllLandMarksAsync();
+            var isLandmarkVisited = new Dictionary<string, bool>();
+
+            landmarks.ToList().ForEach(lm => {
+                isLandmarkVisited.Add(lm.Code, false);
+            });
+
+            var routes = new List<string>();
+            routes.Add(startingLandMark.Code);
+
+            var routesList = new List<string>();
+            GetAllRoutes(startingLandMark, endingLandMark, isLandmarkVisited, routes, routesList);
+
+            return routesList;
         }
 
         private LandmarkModel ConvertToModel(Landmark landmark)

@@ -9,7 +9,7 @@ namespace Locator.Api.Core.Common.Interfaces
 {
     public interface ILandmarkRepository
     {
-        IEnumerable<Landmark> GetAllLandMarksAsync();
+        Task<IEnumerable<Landmark>> GetAllLandMarksAsync();
 
         IEnumerable<Landmark> GetAdjecentLandMarksAsync(Landmark landmark);
 

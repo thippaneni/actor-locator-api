@@ -26,22 +26,13 @@ namespace Locator.Api.Core.Tests.Locator.QueryHandlers
             _handler = new GetDistanceBwLandmarksQueryHandler(_locatorService);
         }
 
-        //private ILandmarkRepository GetMocLandmarkRepository()
-        //{
-        //    var mockRepo = new Mock<ILandmarkRepository>();
-
-        //    mockRepo.Setup(repo=> repo.GetDistanceAsync(It.IsAny<Landmark>(), It.IsAny<Landmark>(), It.IsAny<IEnumerable<Landmark>>()).Result).Returns(12);
-
-        //    return mockRepo.Object;
-        //}
-
         private ILocatorService GetMockLocatorService()
         {
-            var mockRepo = new Mock<ILocatorService>();
+            var mockService = new Mock<ILocatorService>();
 
-            mockRepo.Setup(repo => repo.GetDistanceAsync(It.IsAny<Landmark>(), It.IsAny<Landmark>(), It.IsAny<IEnumerable<Landmark>>()).Result).Returns(12);
+            mockService.Setup(repo => repo.GetDistanceAsync(It.IsAny<Landmark>(), It.IsAny<Landmark>(), It.IsAny<IEnumerable<Landmark>>()).Result).Returns(12);
 
-            return mockRepo.Object;
+            return mockService.Object;
         }
 
         [Fact]

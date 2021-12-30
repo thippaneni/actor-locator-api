@@ -17,13 +17,13 @@ namespace Locator.Api.Infrastructure.Locator.Repository
         {
             _context = context;
         }
-        public IEnumerable<Landmark> GetAllLandMarksAsync()
+        public async Task<IEnumerable<Landmark>> GetAllLandMarksAsync()
         {
-            return _context.LandMarks.ToList();
+            return await _context.LandMarks.ToListAsync();
         }
         public Landmark GetLandMarkByCodeAsync(string code)
         {
-            return _context.LandMarks.ToList().SingleOrDefault(lm => lm.Code == code);
+            return _context.LandMarks.SingleOrDefault(lm=> lm.Code == code);            
         }
         public IEnumerable<Landmark> GetAdjecentLandMarksAsync(Landmark landmark)
         {

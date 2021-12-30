@@ -6,6 +6,7 @@ using Locator.Api.Infrastructure.Persistance;
 using FluentAssertions;
 using System.Linq;
 using System;
+using Locator.Api.Infrastructure.Tests.Base;
 
 namespace Locator.Api.Infrastructure.Tests.Landmark
 {
@@ -15,17 +16,10 @@ namespace Locator.Api.Infrastructure.Tests.Landmark
         private LandmarkRepository _lmRepo;
         public LandmarkRepositoryTest()
         {
-            _context = new InMemoryDBContext(null);
+            _context = ContextBaseTest.TestContext;
             _lmRepo = new LandmarkRepository(_context);
         }
-        [Fact]
-        public void GetAllLandMarks_Test_AllLandMarks_Should_Be_5()
-        {
-            var lms = _lmRepo.GetAllLandMarksAsync();
-            lms.Should().NotBeNull();
-            lms.Count().Should().Be(5);
-        }
-
+        
         [Theory]
         [ClassData(typeof(LandmarkRepositoryTestData))]
         public void GetAdjecentLandMarksAsync_Test(LM.Landmark landmark, List<string> adjLandmrks)
@@ -39,13 +33,11 @@ namespace Locator.Api.Infrastructure.Tests.Landmark
             }
         }
 
-        //[Theory]
-        //[ClassData(typeof(LandmarkRepositoryTestData2))]
-        //public void GetDistanceAsync_Test(LM.Landmark startingLandMark, LM.Landmark endingLandMark, IEnumerable<LM.Landmark> viaLandMarks, int? distance)
-        //{
-
-        //    var result = _lmRepo.GetDistanceAsync(startingLandMark, endingLandMark, viaLandMarks).Result;           
-        //    result.Should().Be(distance);
-        //}
+        [Fact]
+        public void GetLandMarkByCodeAsync_Test()
+        {
+            var result = _lmRepo.GetLandMarkByCodeAsync("A");
+            result.Code.Should().Be("A");
+        }
     }
 }
