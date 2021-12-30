@@ -1,4 +1,5 @@
-﻿using Locator.Api.Domain.Entities;
+﻿using Locator.Api.Core.Common.Interfaces;
+using Locator.Api.Domain.Entities;
 using Locator.Api.Infrastructure.Persistance;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Locator.Api.Infrastructure.Seed
             _landmarks = GetLandMarks();
             _routes = GetRoutes();
         }
-        public static async Task SeedSampleDataAsync(InMemoryDBContext context)
+        public static async Task SeedSampleDataAsync(IApplicationDbContext context)
         {
             if (!context.LandMarks.Any())
             {

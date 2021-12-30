@@ -1,3 +1,4 @@
+using Locator.Api.Core.Common.Interfaces;
 using Locator.Api.Infrastructure.Persistance;
 using Locator.Api.Infrastructure.Seed;
 using Microsoft.AspNetCore.Hosting;
@@ -24,7 +25,7 @@ namespace Locator.Api
 
                 try
                 {
-                    var context = services.GetRequiredService<InMemoryDBContext>();
+                    var context = services.GetRequiredService<IApplicationDbContext>();
                     await ApplicationDBContextSeedData.SeedSampleDataAsync(context);
                 }
                 catch (Exception ex)

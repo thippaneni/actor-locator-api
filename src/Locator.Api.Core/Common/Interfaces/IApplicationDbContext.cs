@@ -13,5 +13,7 @@ namespace Locator.Api.Core.Common.Interfaces
     {
         DbSet<Route> Routes { get; init; }
         DbSet<Landmark> LandMarks { get; init; }
+
+        Task<int> SaveChangesAsync(CancellationToken cancellToken = default);
     }
 }

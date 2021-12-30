@@ -12,24 +12,34 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using Locator.Api.Core.Locator.Interfaces;
 
 namespace Locator.Api.Core.Tests.Locator.QueryHandlers
 {
     public class GetDistanceBwLandmarksQueryHandlerTest
     {
-        private readonly ILandmarkRepository _landmarkRepository;
+        private readonly ILocatorService _locatorService;
         private readonly GetDistanceBwLandmarksQueryHandler _handler;
         public GetDistanceBwLandmarksQueryHandlerTest()
         {
-            _landmarkRepository = GetMocLandmarkRepository();
-            _handler = new GetDistanceBwLandmarksQueryHandler(_landmarkRepository);
+            _locatorService = GetMockLocatorService();
+            _handler = new GetDistanceBwLandmarksQueryHandler(_locatorService);
         }
 
-        private ILandmarkRepository GetMocLandmarkRepository()
-        {
-            var mockRepo = new Mock<ILandmarkRepository>();
+        //private ILandmarkRepository GetMocLandmarkRepository()
+        //{
+        //    var mockRepo = new Mock<ILandmarkRepository>();
 
-            mockRepo.Setup(repo=> repo.GetDistanceAsync(It.IsAny<Landmark>(), It.IsAny<Landmark>(), It.IsAny<IEnumerable<Landmark>>()).Result).Returns(12);
+        //    mockRepo.Setup(repo=> repo.GetDistanceAsync(It.IsAny<Landmark>(), It.IsAny<Landmark>(), It.IsAny<IEnumerable<Landmark>>()).Result).Returns(12);
+
+        //    return mockRepo.Object;
+        //}
+
+        private ILocatorService GetMockLocatorService()
+        {
+            var mockRepo = new Mock<ILocatorService>();
+
+            mockRepo.Setup(repo => repo.GetDistanceAsync(It.IsAny<Landmark>(), It.IsAny<Landmark>(), It.IsAny<IEnumerable<Landmark>>()).Result).Returns(12);
 
             return mockRepo.Object;
         }
