@@ -1,4 +1,5 @@
 ﻿using Locator.Api.Core.Common.Interfaces;
+using Locator.Api.Core.Locator.Interfaces;
 using Locator.Api.Core.Locator.Queries;
 using Locator.Api.Domain.Entities;
 using MediatR;
@@ -13,15 +14,15 @@ namespace Locator.Api.Core.Locator.QueryHandlers
 {
     public class GetAllLandMarksQueryHandler : IRequestHandler<GetAllLandMarksQuery, IEnumerable<Landmark>>
     {
-        private readonly ILandmarkRepository _landmarkRepository;
+        private readonly ILocatorService _locatorService;
 
-        public GetAllLandMarksQueryHandler(ILandmarkRepository landmarkRepository)
+        public GetAllLandMarksQueryHandler(ILocatorService locatorService)
         {
-            _landmarkRepository = landmarkRepository;
+            _locatorService = locatorService;
         }
-        public Task<IEnumerable<Landmark>> Handle(GetAllLandMarksQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Landmark>> Handle(GetAllLandMarksQuery request, CancellationToken cancellationToken)
         {
-            return _landmarkRepository.GetAllLandMarksAsync();
+            return await _locatorService.GetAllLandMarksAsync();
         }
     }
 }

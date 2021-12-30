@@ -1,6 +1,5 @@
 ﻿using Locator.Api.Core.Common.Interfaces;
 using Locator.Api.Domain.Entities;
-using Locator.Api.Infrastructure.Seed;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Locator.Api.Infrastructure.Persistance
 {
-    public class InMemoryDBContext : DbContext, IApplicationDbContext
-    {        
+    public class PostgreSqlDBContext : DbContext, IApplicationDbContext
+    {
         public DbSet<Route> Routes { get; init; }
         public DbSet<Landmark> LandMarks { get; init; }
 
-        public InMemoryDBContext(DbContextOptions<InMemoryDBContext> options) : base(options)
+        public PostgreSqlDBContext(DbContextOptions<PostgreSqlDBContext> options) : base(options)
         {
         }
     }

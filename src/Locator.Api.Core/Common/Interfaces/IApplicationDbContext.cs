@@ -11,7 +11,8 @@ namespace Locator.Api.Core.Common.Interfaces
 {
     public interface IApplicationDbContext
     {
-        IEnumerable<Route> Routes { get; init; }
-        IEnumerable<Landmark> LandMarks { get; init; }
+        DbSet<Route> Routes { get; init; }
+        DbSet<Landmark> LandMarks { get; init; }
+        Task<int> SaveChangesAsync(CancellationToken cancellToken = default);
     }
 }

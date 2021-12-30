@@ -2,6 +2,7 @@ using Locator.Api.Infrastructure.Persistance;
 using FluentAssertions;
 using Xunit;
 using System.Linq;
+using Locator.Api.Infrastructure.Tests.Base;
 
 namespace Locator.Api.Infrastructure.Tests
 {
@@ -10,7 +11,7 @@ namespace Locator.Api.Infrastructure.Tests
         private InMemoryDBContext _context;
         public InMemoryDBContextTest()
         {
-            _context = new InMemoryDBContext();
+            _context = ContextBaseTest.TestContext;
         }
         [Fact]
         public void Routes_Test_Routes_Should_Be_9()
