@@ -1,12 +1,8 @@
-﻿using Locator.Api.Core.Common.Interfaces;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using MediatR;
-using FluentValidation;
-using System.Reflection;
-using Locator.Api.Core.Locator.Interfaces;
+﻿using Locator.Api.Core.Locator.Interfaces;
 using Locator.Api.Core.Locator.Services;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Locator.Api.Core
 {

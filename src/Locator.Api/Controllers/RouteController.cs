@@ -30,7 +30,8 @@ namespace Locator.Api.Controllers
         {
             _logger.LogInformation($"GetAllRoutes invoked at {DateTime.Now}");
             var query = new GetAllRoutesQuery();
-            var result = await _mediatr.Send(query);            
+            var result = await _mediatr.Send(query);
+            
             var routes = new List<RouteResponse>();
             result.ToList().ForEach(route => {
                 var routeResponse = new RouteResponse()
@@ -53,6 +54,7 @@ namespace Locator.Api.Controllers
                 };
                 routes.Add(routeResponse);
             });
+            
             var response = new GetAllRoutesResponse() { Data = routes};
             return Ok(response);
         }
