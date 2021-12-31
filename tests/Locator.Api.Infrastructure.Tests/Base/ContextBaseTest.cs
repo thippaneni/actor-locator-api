@@ -9,31 +9,15 @@ using System.Threading.Tasks;
 
 namespace Locator.Api.Infrastructure.Tests.Base
 {
-    public sealed class ContextBaseTest
+    public static class ContextBaseTest
     {
-        private static InMemoryDBContext _testContext = null;
-        private static readonly object lockThread = new object();
-
-        private ContextBaseTest()
+        public static InMemoryDBContext context = null;
+        static ContextBaseTest()
         {
-            
-        }
-        public static InMemoryDBContext TestContext
-        {
-            get
-            {
-                lock (lockThread)
-                {
-                    if (_testContext == null)
-                    {
-                        var options = new DbContextOptionsBuilder<InMemoryDBContext>();
-                        options.UseInMemoryDatabase("test");
-                        _testContext = new InMemoryDBContext(options.Options);
-                        ApplicationDBContextSeedData.SeedSampleDataAsync(_testContext).ConfigureAwait(false);
-                    }
-                }
-                return _testContext;
-            }
-        }
+            var options = new DbContextOptionsBuilder<InMemoryDBContext>();
+            options.UseInMemoryDatabase("test");
+            context = new InMemoryDBContext(options.Options);
+            ApplicationDBContextSeedData.SeedSampleDataAsync(context).ConfigureAwait(false);
+        }        
     }
 }

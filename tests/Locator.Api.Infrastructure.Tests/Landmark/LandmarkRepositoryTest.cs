@@ -16,7 +16,7 @@ namespace Locator.Api.Infrastructure.Tests.Landmark
         private LandmarkRepository _lmRepo;
         public LandmarkRepositoryTest()
         {
-            _context = ContextBaseTest.TestContext;
+            _context = ContextBaseTest.context;
             _lmRepo = new LandmarkRepository(_context);
         }
         
