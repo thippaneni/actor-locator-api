@@ -1,10 +1,8 @@
-using Locator.Api.Infrastructure.Persistance;
 using FluentAssertions;
-using Xunit;
-using System.Linq;
+using Locator.Api.Infrastructure.Persistance;
 using Locator.Api.Infrastructure.Tests.Base;
-using Microsoft.EntityFrameworkCore;
-using Locator.Api.Infrastructure.Seed;
+using System.Linq;
+using Xunit;
 
 namespace Locator.Api.Infrastructure.Tests
 {

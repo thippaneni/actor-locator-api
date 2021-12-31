@@ -1,12 +1,11 @@
-﻿using LM = Locator.Api.Domain.Entities;
-using Xunit;
-using System.Collections.Generic;
+﻿using FluentAssertions;
 using Locator.Api.Infrastructure.Locator.Repository;
 using Locator.Api.Infrastructure.Persistance;
-using FluentAssertions;
-using System.Linq;
-using System;
 using Locator.Api.Infrastructure.Tests.Base;
+using System.Collections.Generic;
+using System.Linq;
+using Xunit;
+using LM = Locator.Api.Domain.Entities;
 
 namespace Locator.Api.Infrastructure.Tests.Landmark
 {
