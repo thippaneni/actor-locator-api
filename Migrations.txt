@@ -1,0 +1,7 @@
+Migrations 
+-----------------------
+dotnet ef -s ..\Locator.Api migrations add InitialMigration --context PostgreSqlDBContext
+dotnet ef -s ..\Locator.Api database update --context PostgreSqlDBContext
+
+dotnet ef -s ..\Locator.Api migrations add InitialMigration --context MySqlDBContext
+dotnet ef -s ..\Locator.Api database update --context MySqlDBContext
