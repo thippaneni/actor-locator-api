@@ -31,13 +31,17 @@ Sample input to test with
 ![image](https://user-images.githubusercontent.com/10783656/147436096-26c768a0-5c5a-4c6d-bdb8-adc25a5fa61c.png)                 ![image](https://user-images.githubusercontent.com/10783656/147436153-77232799-525c-4898-a83e-90c3425b669d.png)
 
 
-**Technologies Used**
+**Technologies Used and Featres implemented**
 1. ASP.NET Core 5
 2. MediatR
 3. Swagger UI
-4. xUnit
+4. xUnit, Moq
 5. FluentAssertions
 6. And Clean Architecture pattern used in solution design
+7. Logging (to AWS Cloudwatch)
+8. Versioning (default to 1.0)
+9. EF and EF Migrations (to make sure application works for InMemeroy, MySql and PostgreSql databses) 
+10. HealthChecks
 
 **Prerequisites to build this solution locally**
 1. .Net5 sdk - https://dotnet.microsoft.com/en-us/download/dotnet/5.0
