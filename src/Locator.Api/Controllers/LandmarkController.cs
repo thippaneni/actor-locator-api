@@ -67,8 +67,7 @@ namespace Locator.Api.Controllers
         private string ValidateRequest(GetDistanceBwLandmarksRequest request)
         {
             string validationMessage = string.Empty;
-            if (request == null || string.IsNullOrEmpty(request.EndingLanmarkCode) || string.IsNullOrEmpty(request.EndingLanmarkCode)
-                || request.ViaLandmarkCodes == null || !request.ViaLandmarkCodes.Any())
+            if (request == null || string.IsNullOrEmpty(request.EndingLanmarkCode) || string.IsNullOrEmpty(request.EndingLanmarkCode))
             {
                 validationMessage = "input values should not be empty or null";
             }
@@ -78,9 +77,12 @@ namespace Locator.Api.Controllers
                 validationMessage = "Starting and Ending landmarks should be different";
             }
 
-            if (request.ViaLandmarkCodes.Count() != request.ViaLandmarkCodes.Distinct().Count())
+            if (request.ViaLandmarkCodes != null && request.ViaLandmarkCodes.Any())
             {
-                validationMessage = "A given via Landmark Codes should not appear more than once";
+                if (request.ViaLandmarkCodes.Count() != request.ViaLandmarkCodes.Distinct().Count())
+                {
+                    validationMessage = "A given via Landmark Codes should not appear more than once";
+                }
             }
             return validationMessage;
         }

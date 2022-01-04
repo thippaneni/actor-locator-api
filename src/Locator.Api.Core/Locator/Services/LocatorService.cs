@@ -45,12 +45,15 @@ namespace Locator.Api.Core.Locator.Services
         {
             var codes = new List<string>();
             var tempLM = startingLandMark;
-            viaLandMarks.ToList().ForEach(vlm =>
+            if (viaLandMarks != null && viaLandMarks.Any())
             {
-                codes.Add(tempLM.Code + vlm.Code);
-                tempLM.Code = vlm.Code;
-                tempLM.Name = vlm.Name;
-            });
+                viaLandMarks.ToList().ForEach(vlm =>
+                {
+                    codes.Add(tempLM.Code + vlm.Code);
+                    tempLM.Code = vlm.Code;
+                    tempLM.Name = vlm.Name;
+                });
+            }            
             codes.Add(tempLM.Code + endingLandMark.Code);
 
             int? distance = 0;

@@ -29,6 +29,11 @@ namespace Locator.Api
         {
             services.AddInfrastructure(Configuration);
             services.AddControllers();
+            services.AddApiVersioning(version=> {
+                version.DefaultApiVersion = new ApiVersion(1, 0);
+                version.AssumeDefaultVersionWhenUnspecified = true;
+                version.ReportApiVersions = true;
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Locator.Api", Version = "v1" });
@@ -54,6 +59,7 @@ namespace Locator.Api
             app.UseAuthorization();
             loggerFactory.AddAWSProvider(Configuration.GetAWSLoggingConfigSection(), 
                 formatter: (logLevel, message, exception) => $"[{DateTime.Now} {logLevel} {message} {exception?.Message} {exception?.StackTrace}]");
+
             app.UseHealthChecks("/health");
             app.UseEndpoints(endpoints =>
             {
