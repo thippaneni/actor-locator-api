@@ -58,6 +58,7 @@ namespace Locator.Api.Core.Locator.Services
 
             int? distance = 0;
             bool rootFound = false;
+            bool rootFoundflg = true;
             var routes = await _routeRepository.GetAllRoutesAsync();
 
             codes.ForEach(code =>
@@ -71,9 +72,11 @@ namespace Locator.Api.Core.Locator.Services
                         rootFound = true;
                     }
                 }
+                if (!rootFound)
+                    rootFoundflg = false;
             });
 
-            if (!rootFound)
+            if (!rootFoundflg)
             {
                 distance = null;
             }
